@@ -20,8 +20,7 @@ USER jovyan
 
 # RUN conda install -y scikit-learn
 
-RUN conda install -y pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
-RUN conda clean -tipy
+RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
 
 RUN pip install --no-cache-dir networkx scipy
 
