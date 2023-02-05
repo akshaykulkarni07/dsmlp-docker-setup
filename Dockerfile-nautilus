@@ -1,0 +1,25 @@
+# docker build -t <full-image-name> .
+# 1) choose base container
+# generally use the most recent tag
+
+# base notebook, contains Jupyter and relevant tools
+# See https://github.com/ucsd-ets/datahub-docker-stack/wiki/Stable-Tag
+# for a list of the most current containers we maintain
+# ARG BASE_CONTAINER=ucsdets/scipy-ml-notebook:2021.3-stable
+ARG BASE_CONTAINER=pytorch/pytorch:latest
+# ARG BASE_CONTAINER=nvcr.io/nvidia/pytorch:20.12-py3
+
+FROM $BASE_CONTAINER
+
+# 2) change to root to install packages
+USER root
+
+RUN apt-get update
+RUN apt-get -y install htop curl git
+
+# installing the useful micro editor
+RUN curl https://getmic.ro | bash
+RUN mv micro /usr/bin/.
+
+RUN pip install tensorboard gpustat foolbox seaborn matplotlib ftfy pandas scipy tqdm
+RUN pip install git+https://github.com/RobustBench/robustbench.git
